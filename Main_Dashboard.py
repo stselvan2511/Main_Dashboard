@@ -7,7 +7,7 @@ import graphviz
 # Load the dataset
 @st.cache_data
 def load_data():
-    data = pd.read_excel(r'Data\_Water_Consumption_Dataset_.xlsx')
+    data = pd.read_excel(r'Data/_Water_Consumption_Dataset_.xlsx')
     data['Time'] = pd.to_datetime(data['Time'])
     # Drop unnamed columns and the 'Anomalous' column if present
     data = data.loc[:, ~data.columns.str.contains('^Unnamed')]
