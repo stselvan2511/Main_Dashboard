@@ -3,8 +3,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import graphviz
-import os
-import subprocess
+
 
 # Load the dataset
 @st.cache_data
