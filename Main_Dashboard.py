@@ -4,8 +4,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import graphviz
 
-
-# Load the dataset
 @st.cache_data
 def load_data():
     data = pd.read_excel(r'Data/_Water_Consumption_Dataset_.xlsx')
