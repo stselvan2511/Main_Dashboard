@@ -6,7 +6,6 @@ import graphviz
 import os
 import subprocess
 
-
 # Load the dataset
 @st.cache_data
 def load_data():
