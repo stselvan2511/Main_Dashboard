@@ -3,6 +3,43 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import graphviz
+import os
+import subprocess
+
+
+# Sidebar for creating a new application
+if st.sidebar.button("Create New Application"):
+    app_name = st.sidebar.text_input("Enter Application Name:")
+    app_code = st.sidebar.text_area("Enter Streamlit Code for New App:")
+
+    if st.sidebar.button("Deploy New App"):
+        if not app_name.strip():
+            st.error("Application name cannot be empty.")
+        elif not app_code.strip():
+            st.error("Application code cannot be empty.")
+        else:
+            try:
+                # Create the app folder
+                app_folder = f"./{app_name}"
+                os.makedirs(app_folder, exist_ok=True)
+                
+                # Write the application code to a new file
+                app_file = os.path.join(app_folder, "streamlit_app.py")
+                with open(app_file, "w") as f:
+                    f.write(app_code)
+                
+                # Git integration
+                subprocess.run(["git", "add", app_folder], check=True)
+                subprocess.run(["git", "commit", "-m", f"Add new Streamlit app: {app_name}"], check=True)
+                subprocess.run(["git", "push"], check=True)
+
+                st.success(f"New application '{app_name}' created and deployed successfully!")
+            except subprocess.CalledProcessError as git_error:
+                st.error(f"Git error: {git_error}")
+            except Exception as e:
+                st.error(f"An unexpected error occurred: {e}")
+
+
 
 @st.cache_data
 def load_data():
@@ -213,4 +250,9 @@ fig_leakage.update_layout(
     transition={'duration': 3000}  # Set animation duration to 3 seconds
 )
 st.plotly_chart(fig_leakage, use_container_width=True)
+
+# Logout Button
+if st.sidebar.button("Logout"):
+    st.warning("You have been logged out. Close the tab to exit.")
+    st.stop()
 
